@@ -12,7 +12,7 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks/new
   def new
-    @bookmark = Bookmark.new
+    @bookmark = Bookmark.new(type: params[:type].capitalize)
   end
 
   # GET /bookmarks/1/edit

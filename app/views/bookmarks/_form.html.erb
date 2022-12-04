@@ -11,20 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :type %>
-    <%= form.text_field :type %>
-  </div>
+  <%= form.hidden_field :type, value: bookmark.type %>
 
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= form.label :url %>
-    <%= form.text_area :url %>
-  </div>
+  <% if bookmark.type == 'Page' %>
+    <div class="field">
+      <%= form.label :url %>
+      <%= form.text_area :url %>
+    </div>
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
