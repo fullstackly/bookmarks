@@ -12,6 +12,7 @@
   <% end %>
 
   <%= form.hidden_field :type, value: bookmark.type %>
+  <%= form.hidden_field :parent_id, value: bookmark.parent_id %>
 
   <div class="field">
     <%= form.label :name %>

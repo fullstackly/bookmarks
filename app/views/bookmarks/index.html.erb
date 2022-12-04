@@ -16,7 +16,11 @@
     <% @bookmarks.each do |bookmark| %>
       <tr>
         <td><%= bookmark.type %></td>
-        <td><%= bookmark.name %></td>
+        <% if bookmark.instance_of? Folder %>
+          <td><%= link_to bookmark.name, bookmarks_path(parent_id: bookmark.id) %><td>
+        <% else %>
+          <td><%= bookmark.name %></td>
+        <% end %>
         <td><%= bookmark.url %></td>
         <td><%= link_to 'Show', bookmark %></td>
         <td><%= link_to 'Edit', edit_bookmark_path(bookmark) %></td>
@@ -28,5 +32,5 @@
 
 <br>
 
-<%= link_to 'New Folder', new_bookmark_path(type: :folder) %>
-<%= link_to 'New Page', new_bookmark_path(type: :page) %>
+<%= link_to 'New Folder', new_bookmark_path(type: :folder, parent_id: (@parent&.id || nil)) %>
+<%= link_to 'New Page', new_bookmark_path(type: :page, parent_id: (@parent&.id || nil)) %>

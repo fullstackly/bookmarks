@@ -3,7 +3,12 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks or /bookmarks.json
   def index
-    @bookmarks = Bookmark.all
+    if params[:parent_id].present?
+      @parent = Bookmark.find(params[:parent_id])
+      @bookmarks = @parent.children
+    else
+      @bookmarks = Bookmark.top_level
+    end
   end
 
   # GET /bookmarks/1 or /bookmarks/1.json
@@ -12,7 +17,10 @@ class BookmarksController < ApplicationController
 
   # GET /bookmarks/new
   def new
-    @bookmark = Bookmark.new(type: params[:type].capitalize)
+    @bookmark = Bookmark.new(
+      type: params[:type].capitalize, 
+      parent_id: params[:parent_id].to_i
+    )
   end
 
   # GET /bookmarks/1/edit
@@ -65,6 +73,6 @@ class BookmarksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def bookmark_params
-      params.require(:bookmark).permit(:type, :name, :url)
+      params.require(:bookmark).permit(:type, :name, :url, :parent_id)
     end
 end
